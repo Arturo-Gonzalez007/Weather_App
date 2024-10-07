@@ -1,4 +1,4 @@
-import sys#test commit
+import sys  #test commit
 import requests #pip install requests
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout) #pip install PyQt5
 
@@ -21,7 +21,7 @@ api_key = 'aacbd94389d8202d7d751038787ac835'
 
 weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={user_input}&units=imperial&APPID={api_key}")
 
-weather = weather_data.json()['weather'][0]['main']
+weather = weather_data.json()['weather'][0]['main']             #Test commit by omar
 temp = round(weather_data.json()['main']['temp'])
 
 print(weather, temp)
