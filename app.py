@@ -22,8 +22,10 @@ class WeatherApp(QWidget):
 
     def initUI(self):
         self.setWindowTitle("Weather App")
+        self.setGeometry(100, 100, 400, 500)  # Adjusted window size
 
         vbox = QVBoxLayout()
+        vbox.setSpacing(15)  # Add spacing between elements
 
         vbox.addWidget(self.user_city)
         vbox.addWidget(self.city_input)
@@ -37,6 +39,7 @@ class WeatherApp(QWidget):
 
         self.setLayout(vbox)
 
+        # Center alignment
         self.user_city.setAlignment(Qt.AlignCenter)
         self.city_input.setAlignment(Qt.AlignCenter)
         self.user_unit.setAlignment(Qt.AlignCenter)
@@ -46,6 +49,8 @@ class WeatherApp(QWidget):
         self.description_label.setAlignment(Qt.AlignCenter)
         self.temp_highLow.setAlignment(Qt.AlignCenter)
 
+        # Object Names for Styling
+        self.setObjectName("main_window")
         self.user_city.setObjectName("user_city")
         self.city_input.setObjectName("city_input")
         self.user_unit.setObjectName("user_unit")
@@ -56,43 +61,52 @@ class WeatherApp(QWidget):
         self.description_label.setObjectName("description_label")
         self.get_weather_btn.setObjectName("get_weather_btn")
 
+        # Apply CSS Stylesheet
         self.setStyleSheet("""
-            QLabel, QPushButton{
-                font-family: calibri;
+            QWidget#main_window {
+                background-color: #F0F8FF;
             }
-            QLabel#user_city{
-                font-size: 40px;
+            QLabel, QPushButton {
+                font-family: Calibri, Arial;
+            }
+            QLabel#user_city, QLabel#user_unit {
+                font-size: 22px;
                 font-style: italic;
             }
-            QLineEdit#city_input{
+            QLineEdit {
+                font-size: 18px;
+                padding: 8px;
+                border: 2px solid #ccc;
+                border-radius: 8px;
+            }
+            QPushButton#get_weather_btn {
+                font-size: 20px;
+                font-weight: bold;
+                background-color: #4CAF50;
+                color: white;
+                border-radius: 8px;
+                padding: 10px;
+            }
+            QPushButton#get_weather_btn:hover {
+                background-color: #45a049;
+            }
+            QLabel#temp_label {
                 font-size: 40px;
+                font-weight: bold;
             }
-            QLabel#user_unit{
-                font-size: 40px;
-                font-style: italic;
+            QLabel#temp_highLow {
+                font-size: 20px;
             }
-             QLineEdit#unit_input{
-                font-size: 40px;
-            }
-            QPushButton#get_weather_btn{
-               font-size: 30px;
-               font-weight: bold; 
-            }
-            QLabel#temp_label{
+            QLabel#emoji_label {
                 font-size: 60px;
+                font-family: 'Segoe UI Emoji';
             }
-            QLabel#temp_highLow{
-                font-size: 30px;
+            QLabel#description_label {
+                font-size: 24px;
             }
-            QLabel#emoji_label{
-                font-size: 100px;
-                font-family: Segoe UI emoji;
-            }
-            QLabel#description_label{
-                font-size: 50px;
-            }
-        
         """)
+
+        self.get_weather_btn.clicked.connect(self.get_weather)
 
         self.get_weather_btn.clicked.connect(self.get_weather)
 
