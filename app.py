@@ -18,6 +18,7 @@ class WeatherApp(QWidget):
         self.emoji_label = QLabel(self)
         self.description_label = QLabel(self)
         self.temp_highLow = QLabel(self)
+        self.wind_label = QLabel(self)
         self.initUI()
 
     def initUI(self):
@@ -36,6 +37,8 @@ class WeatherApp(QWidget):
         vbox.addWidget(self.emoji_label)
         vbox.addWidget(self.description_label)
         vbox.addWidget(self.temp_highLow)
+        vbox.addWidget(self.wind_label)  # Add wind label
+
 
         self.setLayout(vbox)
 
@@ -48,6 +51,7 @@ class WeatherApp(QWidget):
         self.emoji_label.setAlignment(Qt.AlignCenter)
         self.description_label.setAlignment(Qt.AlignCenter)
         self.temp_highLow.setAlignment(Qt.AlignCenter)
+        self.wind_label.setAlignment(Qt.AlignCenter)
 
         # Object Names for Styling
         self.setObjectName("main_window")
@@ -60,6 +64,8 @@ class WeatherApp(QWidget):
         self.emoji_label.setObjectName("emoji_label")
         self.description_label.setObjectName("description_label")
         self.get_weather_btn.setObjectName("get_weather_btn")
+        self.wind_label.setObjectName("wind_label")
+
 
         # Apply CSS Stylesheet
         self.setStyleSheet("""
@@ -164,7 +170,6 @@ class WeatherApp(QWidget):
         self.description_label.setText(" ")
         self.temp_highLow.setText(" ")
 
-
     def display_weather(self, weather):
         self.temp_label.setStyleSheet("font-size: 60px")
 
@@ -174,21 +179,21 @@ class WeatherApp(QWidget):
         weather_low = weather["main"]["temp_min"]
         weather_id = weather["weather"][0]["id"]
         weather_description = weather["weather"][0]["description"]
+        wind_speed = weather["wind"]["speed"]
 
         if unit == "F":
             self.temp_label.setText(f"{weather_temp:.0f}°F")
-            self.emoji_label.setText(self.get_emoji(weather_id))
-            self.description_label.setText(weather_description)
             self.temp_highLow.setText(f"H:{weather_high:.0f}° L:{weather_low:.0f}°")
+            self.wind_label.setText(f"🌬 Wind: {wind_speed:.1f} mph")
         elif unit == "C":
             self.temp_label.setText(f"{((weather_temp - 32) * 5 / 9):.0f}°C")
-            print(weather_temp)
-            self.emoji_label.setText(self.get_emoji(weather_id))
-            self.description_label.setText(weather_description)
             self.temp_highLow.setText(f"H:{((weather_high - 32) * 5 / 9):.0f}° L:{((weather_low - 32) * 5 / 9):.0f}°")
+            self.wind_label.setText(f"🌬 Wind: {(wind_speed * 1.609):.1f} km/h")
         else:
             self.display_error("Invalid unit:\nPlease try again")
 
+        self.emoji_label.setText(self.get_emoji(weather_id))
+        self.description_label.setText(weather_description)
 
     @staticmethod
     def get_emoji(weather_id):
